@@ -115,8 +115,14 @@ def translate_func(text):
 
 
 # translate text to braille
-@app.get("/translate/")
+@app.get("/translate/source/")
 async def translate(text: str):
-    tenji, wakati = translate_func(text)
+    source = text
+    tenji, wakati = translate_func(source)
     return {"source": text, "target": tenji, "wakati": wakati}
 
+@app.get("/translate/wakati/")
+async def translate(text: str):
+    wakati = text
+    tenji = tenji_func(text)
+    return {"target": tenji}
