@@ -1,1 +1,3 @@
+```shell
 npm run dev
+```
