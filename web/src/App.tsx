@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { ThumbUpOffAlt, ThumbDownOffAlt, ThumbUpAlt, ThumbDownAlt } from '@mui/icons-material';
-import { Box, Button, AppBar, Toolbar, IconButton, Typography, TextField} from '@mui/material';
+import { Box, Button, AppBar, Toolbar, IconButton, Typography, TextField, Switch} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useTheme } from '@mui/material/styles';
 import { API_ENDPOINT } from './commons/config';
 
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 function App() {
   const [sourceText, setSourceText] = useState('今日の天気は晴天ですね。')
@@ -26,6 +27,12 @@ function App() {
     const data = await response.json();
     return data
   }
+
+    const [checked, setChecked] = React.useState(true);
+  
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setChecked(event.target.checked);
+    };
 
 
   useEffect(() => {
@@ -54,18 +61,26 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
+      <Switch
+        checked={checked}
+        onChange={handleChange}
+        inputProps={{ 'aria-label': 'controlled' }}
+      />
+      {checked && (<>ルールベース</>)}
+      {!checked && (<>プロンプトベース</>)}
+
       <div className="px-5 bg-gray-100">
         <Box sx={{justifyContent: 'space-around'}}>
           <Box sx={{mx: 2.5, pt:1.5}} >      
             <Typography align="center" variant="h6" gutterBottom >
               翻訳元のテキスト
             </Typography>    
-                {/* set background color of TextField to white */}
             <TextField  style={{backgroundColor: 'white'}} multiline variant="outlined" rows={6} fullWidth value={sourceText} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSourceText(e.target.value)}/>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 
             <Button onClick={() => {navigator.clipboard.writeText(sourceText)}}>Copy</Button>
-</div>          </Box>
+            </div>          
+          </Box>
           
           <Box sx={{ mx: 2.5}}>
             <Box>
