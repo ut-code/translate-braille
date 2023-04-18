@@ -8,6 +8,33 @@ import os
 
 app = FastAPI()
 
+import os
+import openai
+openai.organization = organization
+openai.api_key = os.getenv(openApiKey)
+openai.Model.list()
+
+
+import os
+import requests
+import json
+from dotenv import load_dotenv
+
+# .envにOPENAI_API_KEYを設定しておく
+load_dotenv()
+
+openai_organization = 'Personal'
+openai_api_key = os.getenv('OPENAI_API_KEY')
+
+headers = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Bearer {openai_api_key}'
+}
+
+
+
+
+
 
 WEB_ORIGIN = os.getenv("WEB_ORIGIN", "http://localhost:5173")
 
@@ -264,3 +291,27 @@ async def callWakati2target(wakatiText: str):
 @app.get("/evaluation/")
 async def evaluation(sourceText: str, wakatiText: str, evaluation: str):
     return
+
+@app.get("/nn/")
+async def nn(sourceText: str):
+    data = {
+        'model': 'text-davinci-003',
+        'prompt': f"日本語で書かれた文章を、分かち書きに変換してください。点字に使われるような分かち書きをしてください。入力文: {sourceText}, :出力文: ",
+        'max_tokens': 100,
+        'temperature': 0
+    }
+    response = requests.post('https://api.openai.com/v1/completions', headers=headers, data=json.dumps(data))
+    if response.status_code == 200:
+        print("Request successful!")
+        print(response.json())
+        nnWakatiText = response.json()["choices"][0]["text"]
+        targetText = wakati2target(nnWakatiText)
+
+        wakatiText = source2wakati(sourceText)
+        targetText = wakati2target(wakatiText)
+
+        return {"sourceText": sourceText, "targetText": targetText, "wakatiText": wakatiText, "nnWakatiText": nnWakatiText}
+
+    else:
+        print(f"Request failed with status code: {response.status_code}")
+        print(response.text)
