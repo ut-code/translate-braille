@@ -1,5 +1,6 @@
-https://translate-braille.onrender.com/
 # translate-braille
+
+https://translate-braille.onrender.com/
 
 <img width="1085" alt="image" src="https://user-images.githubusercontent.com/58214906/227707597-e1c21196-ab46-4857-8ca8-c5bc165120e6.png">
 
@@ -12,16 +13,8 @@ npm run setup
 
 ## 開発
 
-### フロントエンド
-
 ```shell
-npm run web:dev
-```
-
-### バックエンド
-
-```shell
-npm run server:dev
+npm run dev
 ```
 
 ## 参考資料
