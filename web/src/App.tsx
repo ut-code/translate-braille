@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/material/styles";
-import { API_ENDPOINT } from "./com;
+import { API_ENDPOINT } from "./commons/config";
 import { unicodeToBes } from './modules/unicodeToBes';
 
 function App() {
@@ -134,21 +134,6 @@ function App() {
             <Typography align="center" variant="h6" gutterBottom>
               翻訳後のテキスト
             </Typography>
-<<<<<<< HEAD
-            <TextField style={{backgroundColor: theme.palette.secondary.main}} label="readonly" multiline variant="outlined" rows={6} fullWidth value={targetText} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTargetText(e.target.value)} />
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button onClick={() => {navigator.clipboard.writeText(targetText)}}>Copy</Button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button onClick={() => {const buffer = unicodeToBes(targetText);
-              const blob = new Blob([buffer], { type: "text/plain" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = "output.BES";
-              a.click();}}>Output</Button>
-            </div>   
-=======
             <TextField
               style={{ backgroundColor: theme.palette.secondary.main }}
               label="readonly"
@@ -170,7 +155,15 @@ function App() {
                 Copy
               </Button>
             </div>
->>>>>>> 50ba36e27ce7632725bc1a5be562710df9fa414e
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button onClick={() => {const buffer = unicodeToBes(targetText);
+              const blob = new Blob([buffer], { type: "text/plain" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "output.BES";
+              a.click();}}>Output</Button>
+            </div>
           </Box>
         </Box>
       </div>

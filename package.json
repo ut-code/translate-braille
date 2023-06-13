@@ -10,14 +10,10 @@
     "setup:install:server": "cd server && python3 -m venv env && . ./env/bin/activate && pip install -r requirements.txt && python -m unidic download && deactivate",
     "dev": "npm run server:dev & npm run web:dev",
     "web:dev": "cd web && npm run dev",
-<<<<<<< HEAD
-    "server:dev": "cd server && . ./env/bin/activate && uvicorn main:app --reload --port 8000 && deactivate"
-=======
     "server:dev": "cd server && . ./env/bin/activate && uvicorn main:app --reload --port 8000 && deactivate",
     "format": "npm run format:web && npm run format:server",
     "format:web": "prettier --write web",
     "format:server": "cd server && . ./env/bin/activate && black . && deactivate"
->>>>>>> 50ba36e27ce7632725bc1a5be562710df9fa414e
   },
   "repository": {
     "type": "git",
