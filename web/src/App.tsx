@@ -20,8 +20,12 @@ import { useTheme } from "@mui/material/styles";
 import { API_ENDPOINT } from "./commons/config";
 
 function App() {
-  const [displaySourceText, setDisplaySourceText] = useState("今日の天気は晴天ですね。\n今日の天気は晴天ですね。");
-  const [sourceText, setSourceText] = useState("今日の天気は晴天ですね。\n今日の天気は晴天ですね。");
+  const [displaySourceText, setDisplaySourceText] = useState(
+    "今日の天気は晴天ですね。\n今日の天気は晴天ですね。"
+  );
+  const [sourceText, setSourceText] = useState(
+    "今日の天気は晴天ですね。\n今日の天気は晴天ですね。"
+  );
   const [displayWakatiText, setDisplayWakatiText] = useState("");
   const [wakatiText, setWakatiText] = useState("");
   //const [displayTargetText, setDisplayTargetText] = useState("");
@@ -89,8 +93,8 @@ function App() {
               fullWidth
               value={displaySourceText}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setDisplaySourceText(e.target.value)
-                setSourceText(e.target.value.replace(/\n/g, "\\n"))
+                setDisplaySourceText(e.target.value);
+                setSourceText(e.target.value.replace(/\n/g, "\\n"));
               }}
             />
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -119,8 +123,8 @@ function App() {
                 fullWidth
                 value={displayWakatiText}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setDisplayWakatiText(e.target.value)
-                  setWakatiText(e.target.value.replace(/\n/g, "\\n"))
+                  setDisplayWakatiText(e.target.value);
+                  setWakatiText(e.target.value.replace(/\n/g, "\\n"));
                 }}
               />
             </Box>
@@ -150,7 +154,7 @@ function App() {
               value={targetText}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 //setDisplayTargetText(e.target.value)
-                setTargetText(e.target.value)
+                setTargetText(e.target.value);
               }}
             />
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
