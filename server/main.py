@@ -37,7 +37,15 @@ def source2wakati(source):
 """
 
 
-def source2wakati(source):
+def source2wakati(source):  # 改行に対応
+    lines = source.split("\\n")
+    target = []
+    for line in lines:
+        target.append(source2wakati_byLines(line))
+    return "\n".join(target)
+
+
+def source2wakati_byLines(source):
     tagger = MeCab.Tagger()
     parses = tagger.parse(source)
     pasrses_1 = parses.split("\n")
@@ -69,9 +77,11 @@ def source2wakati(source):
 
             letter = [_ for _ in kana]
             letter_normal = [_ for _ in kana_normal]
-            letter_default = [_ for _ in parse.split()[0]] #入力された文字１つずつ
-            for num in range(min(len(letter), len(letter_normal))): 
-                if letter[num] == "ー" and (letter_normal[num] == "イ" or letter_normal[num] == "オ"): #イとオは長音にしない
+            letter_default = [_ for _ in parse.split()[0]]  # 入力された文字１つずつ
+            for num in range(min(len(letter), len(letter_normal))):
+                if letter[num] == "ー" and (
+                    letter_normal[num] == "イ" or letter_normal[num] == "オ"
+                ):  # イとオは長音にしない
                     letter[num] = letter_normal[num]
                 if letter[num] == "ズ" and (letter_normal[num] == "ヅ"):  # 「続く」は「ツヅク」
                     letter[num] = letter_normal[num]
@@ -150,7 +160,15 @@ def Jp_trans_func(char, prechar, pre_num, target):
         target.append("⠀")
 
 
-def wakati2target(source):
+def wakati2target(source):  # 改行に対応
+    lines = source.split("\\n")
+    target = []
+    for line in lines:
+        target.append(wakati2target_byLines(line))
+    return "\n".join(target)
+
+
+def wakati2target_byLines(source):
     letter = [_ for _ in source]
     target = []
     pre_num = False  # 前が数字か
