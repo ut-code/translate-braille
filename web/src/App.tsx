@@ -20,9 +20,16 @@ import { useTheme } from "@mui/material/styles";
 import { API_ENDPOINT } from "./commons/config";
 
 function App() {
-  const [sourceText, setSourceText] = useState("今日の天気は晴天ですね。");
-  const [targetText, setTargetText] = useState("");
+  const [displaySourceText, setDisplaySourceText] = useState(
+    "今日の天気は晴天ですね。\n今日の天気は晴天ですね。"
+  );
+  const [sourceText, setSourceText] = useState(
+    "今日の天気は晴天ですね。\n今日の天気は晴天ですね。"
+  );
+  const [displayWakatiText, setDisplayWakatiText] = useState("");
   const [wakatiText, setWakatiText] = useState("");
+  //const [displayTargetText, setDisplayTargetText] = useState("");
+  const [targetText, setTargetText] = useState("");
   const [wakatiReference, setWakatiReference] = useState("");
   const [thumbup, setThumbup] = React.useState(false);
   const [thumbdown, setThumbdown] = React.useState(false);
@@ -44,15 +51,17 @@ function App() {
   }
 
   useEffect(() => {
-    source2wakati(sourceText).then((data) => {
+    source2wakati(sourceText.replace(/\n/g, "\\n")).then((data) => {
       setWakatiText(data.wakatiText);
+      setDisplayWakatiText(data.wakatiText);
       setWakatiReference(data.wakatiText);
     });
   }, [sourceText]);
 
   useEffect(() => {
-    wakati2target(wakatiText).then((data) => {
+    wakati2target(wakatiText.replace(/\n/g, "\\n")).then((data) => {
       setTargetText(data.targetText);
+      //setDisplayTargetText(data.targetText);
     });
   }, [wakatiText]);
 
@@ -82,10 +91,11 @@ function App() {
               variant="outlined"
               rows={6}
               fullWidth
-              value={sourceText}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSourceText(e.target.value)
-              }
+              value={displaySourceText}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setDisplaySourceText(e.target.value);
+                setSourceText(e.target.value.replace(/\n/g, "\\n"));
+              }}
             />
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <Button
@@ -111,10 +121,11 @@ function App() {
                 variant="outlined"
                 rows={6}
                 fullWidth
-                value={wakatiText}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setWakatiText(e.target.value)
-                }
+                value={displayWakatiText}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setDisplayWakatiText(e.target.value);
+                  setWakatiText(e.target.value.replace(/\n/g, "\\n"));
+                }}
               />
             </Box>
             <Box></Box>
@@ -141,9 +152,10 @@ function App() {
               rows={6}
               fullWidth
               value={targetText}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTargetText(e.target.value)
-              }
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //setDisplayTargetText(e.target.value)
+                setTargetText(e.target.value);
+              }}
             />
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <Button
